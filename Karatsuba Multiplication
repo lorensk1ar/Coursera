@@ -1,0 +1,68 @@
+from random import *
+
+def match_string_length(a, b):
+    '''
+    IN: str a & str b
+    OUT: str a & str b where len(a) == len(b)
+    EX: '123' , '45' --> '123' , '045'
+    '''
+    
+    s = len(a)
+    t = len(b)
+
+    if s > t:
+        b = '0' * (s - t) + b
+
+    elif s < t:
+        a = '0' * (t - s) + a
+
+    else:
+        pass
+
+    return a, b
+
+def add_strings(a, b):
+    '''
+    IN: str a & str b composed entirely of digits 0 through 9
+    OUT: str(int(a) + int(b))
+    EX: '12' + '34' = '46'
+    '''
+
+    a, b = match_string_length(a, b)
+
+    s = len(a)
+
+    c = ""
+    carry = 0
+
+    for i in range(-1, -(s + 1), -1):
+        x = int(a[i])
+        y = int(b[i])
+
+        z = x + y + carry
+
+        c = str(z % 10) + c
+
+        carry = z // 10
+
+    c = str(carry) + c
+
+    return c
+
+ok = True
+top = 10 ** 64
+for trial in range(1000):
+    x = randint(0, top)
+    y = randint(0, top)
+    simple = x + y
+
+    a = str(x)
+    b = str(y)
+    quick = add_strings(a, b)
+
+    if simple != int(quick):
+        ok = False
+        print(a, b, simple, quick)
+
+if ok:
+    print("Rockstar!")
