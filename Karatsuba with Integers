@@ -1,9 +1,9 @@
 '''
-Fails due to multiplication of integers with different lengths.
+Fails due to multiplication of integers with different lengths? or is it odd length?
 
 Specifically, karatsuba(a + b, c + d)
 
-How do I match lengths using integers?
+Why does this fail for integers with odd length?
 
 '''
 
