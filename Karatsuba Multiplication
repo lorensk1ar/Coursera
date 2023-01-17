@@ -90,6 +90,7 @@ def quick(x, y):
             
         return u
         
+## MAIN
 track = False
 ok = True
 top = 10 ** 64
