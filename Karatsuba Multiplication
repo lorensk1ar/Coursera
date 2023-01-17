@@ -1,26 +1,10 @@
-from random import *
+## MODULES
+from math import ceil
+from random import randint
+from time import time
 
-def match_string_length(a, b):
-    '''
-    IN: str a & str b
-    OUT: str a & str b where len(a) == len(b)
-    EX: '123' , '45' --> '123' , '045'
-    '''
-    
-    s = len(a)
-    t = len(b)
 
-    if s > t:
-        b = '0' * (s - t) + b
-
-    elif s < t:
-        a = '0' * (t - s) + a
-
-    else:
-        pass
-
-    return a, b
-
+## FUNCTIONS
 def add_strings(a, b):
     '''
     IN: str a & str b composed entirely of digits 0 through 9
@@ -28,10 +12,21 @@ def add_strings(a, b):
     EX: '12' + '34' = '46'
     '''
 
-    a, b = match_string_length(a, b)
+    q = len(a)
+    r = len(b)
 
-    s = len(a)
+    if q > r:
+        s = q
+        b = '0' * (q - r) + b
 
+    elif r > q:
+        s = r
+        a = '0' * (r - q) + a
+
+
+    else:
+        s = r
+        
     c = ""
     carry = 0
 
@@ -45,24 +40,80 @@ def add_strings(a, b):
 
         carry = z // 10
 
-    c = str(carry) + c
+    if carry > 0:
+        c = str(carry) + c
 
     return c
+        
+def simple(x, y):
+    return x * y
 
+def quick(x, y):
+    '''
+    IN: str representing integers x & y
+    OUT: integer representing product of x & y
+    
+    '''
+    # base case
+    if len(x) <= 1:
+        return int(x) * int(y)
+
+    # recurse
+    else:
+        # is x longer?
+        if len(y) > len(x):
+            x, y = y, x
+            
+        n = len(x)
+        m = ceil(n / 2)
+        
+        a = x[:-m]
+        b = x[-m:]
+
+        # is y longer than x / 2?
+        if len(y) <= m:
+            y = '0' * (m - len(y) + 1) + y
+
+        c = y[:-m]
+        d = y[-m:]
+
+        s1 = quick(a, c)
+        s2 = quick(b, d)
+        s3 = quick(add_strings(a, b), add_strings(c, d))
+        t = s3 - s2 - s1
+
+        u = 10**(2*m) * s1 + 10**m * t + s2
+        
+        if track:
+            v = int(x) + int(y)
+            print(x, y, u, v, u == v)
+            
+        return u
+        
+track = False
 ok = True
 top = 10 ** 64
+ts = 0
+tq = 0
 for trial in range(1000):
     x = randint(0, top)
     y = randint(0, top)
-    simple = x + y
+    tick = time()
+    a = simple(x, y)
+    ts += time() - tick
+    
 
-    a = str(x)
-    b = str(y)
-    quick = add_strings(a, b)
-
-    if simple != int(quick):
+    w = str(x)
+    z = str(y)
+    tick = time()
+    b = quick(w, z)
+    tq += time() - tick
+    
+    if a != int(b):
         ok = False
-        print(a, b, simple, quick)
+        print(x, y, a, b)
 
+print("Grade school algo:", round(ts, 3), "seconds")
+print("Karatsuba multiplication:", round(tq, 3), "seconds")
 if ok:
     print("Rockstar!")
