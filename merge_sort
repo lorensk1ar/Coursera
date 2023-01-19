@@ -1,0 +1,49 @@
+from list_tools import *
+
+def merge_sort(A):
+    n = len(A)
+    m = n // 2
+
+    if n <= 1:
+        return A
+
+    else:
+        B = merge_sort(A[:m])
+        C = merge_sort(A[m:])
+    
+        i = 0
+        j = 0
+        D = []
+
+        while i < len(B) and j < len(C):
+            if B[i] <= C[j]:
+                D.append(B[i])
+                i += 1
+
+            else:
+                D.append(C[j])
+                j += 1
+
+        if i == len(B):
+            D = D + C[j:]
+
+        else:
+            D = D + B[i:]
+
+        return D
+
+ok = True
+for trial in range(100):
+    A = random_list(10**5, 10**6)
+
+    B = merge_sort(A)
+
+    A.sort()
+
+    if A != B:
+        ok = False
+        print(A)
+        Print(B)
+
+if ok:
+    print("Rockstar!")
