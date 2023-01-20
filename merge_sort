@@ -33,17 +33,27 @@ def merge_sort(A):
         return D
 
 ok = True
-for trial in range(100):
+python = 0
+coursera = 0
+for trial in range(10):
     A = random_list(10**5, 10**6)
 
+    start = time.time()
     B = merge_sort(A)
+    coursera += time.time() - start
 
+    start = time.time()
     A.sort()
+    python += time.time() - start
 
     if A != B:
         ok = False
 
     print(trial, ok)
-    
+
+
 if ok:
     print("Rockstar!")
+
+print("Python:", round(python, 3), "seconds")
+print("Coursera:", round(coursera, 3), "seconds")
