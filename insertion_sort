@@ -1,3 +1,44 @@
+## MODULES
+from list_tools_v2 import *
+
+from math import inf
+
+import time
+
+## MERGE SORT
+def merge_sort(A):
+    n = len(A)
+    m = n // 2
+
+    if n <= 1:
+        return A
+
+    else:
+        B = merge_sort(A[:m])
+        C = merge_sort(A[m:])
+    
+        i = 0
+        j = 0
+        D = []
+
+        while i < len(B) and j < len(C):
+            if B[i] <= C[j]:
+                D.append(B[i])
+                i += 1
+
+            else:
+                D.append(C[j])
+                j += 1
+
+        if i == len(B):
+            D = D + C[j:]
+
+        else:
+            D = D + B[i:]
+
+        return D
+
+## INSERTION SORT
 def insertion_sort(A):
     B = [inf]
     for i in range(len(A)):
@@ -9,3 +50,32 @@ def insertion_sort(A):
                 break
 
     return B[:-1]
+
+## MAIN
+ok = True
+insert = 0
+merge = 0
+
+for trial in range(10):
+    A = list_with_duplicates(10**4, 10**6)
+
+    start = time.time()
+    B = merge_sort(A)
+    merge += time.time() - start
+
+    start = time.time()
+    C = insertion_sort(A)
+    insert += time.time() - start
+
+    A.sort()
+
+    if B != A or C != A:
+        ok = False
+
+    print(trial + 1, ok)
+
+if ok:
+    print("Rockstar!")
+
+print("Merge sort:", round(merge, 3), "seconds")
+print("Insertion sort:", round(insert, 3), "seconds")
