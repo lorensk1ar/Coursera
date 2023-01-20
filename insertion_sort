@@ -1,0 +1,11 @@
+def insertion_sort(A):
+    B = [inf]
+    for i in range(len(A)):
+        a = A[i]
+        for j in range(len(B)):
+            b = B[j]
+            if a <= b:
+                B = B[:j] + [a] + B[j:]
+                break
+
+    return B[:-1]
