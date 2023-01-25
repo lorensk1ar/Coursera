@@ -17,17 +17,17 @@ def add(X, Y):
             
 # multiply
 def multiply(X, Y):
-    assert len(X) == len(Y[0])
     assert len(X[0]) == len(Y)
 
-
-    n = len(X)
+    r = len(X)
     m = len(X[0])
+    c = len(Y[0])
 
-    Z = [[0 for c in range(n)] for r in range(n)]
 
-    for i in range(n):
-        for j in range(n):
+    Z = [[0 for j in range(c)] for i in range(r)]
+
+    for i in range(r):
+        for j in range(c):
             for k in range(m):
                 Z[i][j] += X[i][k] * Y[k][j]
 
