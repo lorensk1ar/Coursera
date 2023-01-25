@@ -16,6 +16,22 @@ def add(X, Y):
     return Z
             
 # multiply
+def multiply(X, Y):
+    assert len(X) == len(Y[0])
+    assert len(X[0]) == len(Y)
+
+
+    n = len(X)
+    m = len(X[0])
+
+    Z = [[0 for c in range(n)] for r in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            for k in range(m):
+                Z[i][j] += X[i][k] * Y[k][j]
+
+    return Z
 
 # display
 def display(X):
